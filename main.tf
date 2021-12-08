@@ -1,37 +1,18 @@
-provider "google" {
-    credentials = file ("gcp-account.json")
-    project     = "gcp-terraform 0324119"
-    region      = "europe-west4"
-    zone        = "europe-west4-a"
-}
+resource "google_storage_bucket" "sample-bucket-1" {
+  name          = "image1"
+  location      = "us-west1"
+  force_destroy = true
 
-resource "google_compute_instance" "default" {
- name         = "test1"
- machine_type = "e2-micro"
+  uniform_bucket_level_access = true
 
- boot_disk {
-  initialize_params {
-   image = "debian-cloud/debian-9"
+  website {
+    main_page_suffix = "index.html"
+    not_found_page   = "404.html"
   }
- }
-
- network_interface {
-  network ="default"
- }
-}
-
-resource "google_storage_bucket" "my_bucket1" {
-  name     = "sample-bucket1"
-  location = "europe-west4"
-  force_destroy = true
-
-  uniform_bucket_level_access = true
-}
-
-resource "google_storage_bucket" "my_bucket2" {
-  name     = "sample-bucket1"
-  location = "europe-west4"
-  force_destroy = true
-
-  uniform_bucket_level_access = true
+  cors {
+    origin          = ["http://image-store.com"]
+    method          = ["GET", "HEAD", "PUT", "POST", "DELETE"]
+    response_header = ["*"]
+    max_age_seconds = 3600
+  }
 }
