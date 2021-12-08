@@ -20,7 +20,15 @@ resource "google_compute_instance" "default" {
  }
 }
 
-resource "google_storage_bucket" "my_bucket" {
+resource "google_storage_bucket" "my_bucket1" {
+  name     = "sample-bucket1"
+  location = "europe-west4"
+  force_destroy = true
+
+  uniform_bucket_level_access = true
+}
+
+resource "google_storage_bucket" "my_bucket2" {
   name     = "sample-bucket1"
   location = "europe-west4"
   force_destroy = true
