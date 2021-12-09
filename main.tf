@@ -1,4 +1,4 @@
-resource "google_storage_bucket" "sample-bucket" {
+resource "google_storage_bucket" "sample-bucket-1" {
   name          = "image1"
   location      = "EU"
   force_destroy = true
